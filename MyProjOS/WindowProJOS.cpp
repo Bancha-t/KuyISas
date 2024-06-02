@@ -68,7 +68,7 @@ void WindowProJOS::Commandsystem(vector<string> words)
     }
 
     else if (words[0] == "clear" && words.size() < 2) {
-        system("cls");
+        this->clearScreen();
         this->Commandinput();
         return;
     }
@@ -99,7 +99,7 @@ void WindowProJOS::LoginLOGO()
 string WindowProJOS::LoginFuncUser()
 {
     string user;
-    system("cls");
+    this->clearScreen();
     this->LoginLOGO();
     cout << "Please enter your user: ";
     cin >> user;
@@ -117,7 +117,7 @@ void WindowProJOS::LoginFuncPassword(string user)
         char ch = _getch();
         if (ch == '\r') break;
         if (ch == ' ') {
-            system("cls");
+            this->clearScreen();
             cout << "*Receiving password incorrectly*\n";
             LoginLOGO();
             cout << "Please enter your user : " << user << endl;
@@ -178,7 +178,7 @@ void WindowProJOS::LoginFuncPassword(string user)
 
 void WindowProJOS::ChackPassword()
 {
-    system("cls");
+    this->clearScreen();
     WindowMainProjOS mainOS(this);
     cin.ignore();
     mainOS.ChaOS();
@@ -187,6 +187,14 @@ void WindowProJOS::ChackPassword()
 
 void WindowProJOS::Logout()
 {
-    system("cls");
+    this->clearScreen();
     this->Commandinput();
+}
+
+void WindowProJOS::clearScreen() {
+#ifdef _WIN32
+    system("cls");
+#else
+    system("clear");
+#endif
 }

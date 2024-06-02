@@ -31,6 +31,7 @@ private:
 	string LoginFuncUser();
 	void LoginFuncPassword(string);
 	void ChackPassword();
+	void clearScreen();
 };
 
 #endif // WINDOWPROJOS_H

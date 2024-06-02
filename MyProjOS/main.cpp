@@ -1,5 +1,12 @@
 #include "WindowProJOS.h"
 
 int main() {
-	WindowProJOS OSRun;
+#ifdef _WIN32
+    system("cls");
+#else
+    system("clear");
+#endif
+
+
+    WindowProJOS OSRun;
 }

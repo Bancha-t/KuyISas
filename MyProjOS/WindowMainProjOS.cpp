@@ -19,6 +19,7 @@ void WindowMainProjOS::ChaOS()
     cout << COLOR_RESET;
 }
 
+
 string WindowMainProjOS::getUserInput() {
     string input;
     cout << "user@" << OSname <<" : ";
@@ -75,7 +76,7 @@ void WindowMainProjOS::Commandsystem(vector<string> words)
         }
     }
     else if (words[0] == "clear" && words.size() < 2) {
-        system("cls");
+        this->clearScreen();
         this->ChaOS();
         this->getUserInput();
         return;
@@ -85,4 +86,12 @@ void WindowMainProjOS::Commandsystem(vector<string> words)
         return;
     }
     this->getUserInput();
+}
+
+void WindowMainProjOS::clearScreen() {
+#ifdef _WIN32
+    system("cls");
+#else
+    system("clear");
+#endif
 }

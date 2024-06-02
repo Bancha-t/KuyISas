@@ -27,6 +27,8 @@ private:
     vector<string> HandleInputMainOS(string);
     void Commandsystem(vector<string>);
     void ChackCallSystem(vector<string>, string);
+    void clearScreen();
 };
+
 
 #endif // WINDOWMAINPROJOS_H
