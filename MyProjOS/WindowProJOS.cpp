@@ -135,38 +135,17 @@ void WindowProJOS::LoginFuncPassword(string user)
         }
     }
 #else
-    termios oldt;
+    termios oldt, newt;
     tcgetattr(STDIN_FILENO, &oldt);
-    termios newt = oldt;
-    newt.c_lflag &= ~ECHO;
+    newt = oldt;
+    newt.c_lflag &= ~(ICANON | ECHO);
     tcsetattr(STDIN_FILENO, TCSANOW, &newt);
 
     char ch;
     while (true) {
         ch = getchar();
         if (ch == '\n') break;
-        if (ch == ' ') {
-            tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
-
-            system("clear");
-            cout << "*Receiving password incorrectly*\n";
-            LoginLOGO();
-            cout << "Please enter your user : " << user << endl;
-
-            tcsetattr(STDIN_FILENO, TCSANOW, &newt);
-
-            password.clear();
-            cout << "Please enter password again: ";
-            continue;
-        }
-        if (ch == 127 && !password.empty()) {
-            password.pop_back();
-            cout << "\b \b";
-        }
-        else {
-            password.push_back(ch);
-            cout << "*"; 
-        }
+        password.push_back(ch);
     }
 
     tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
@@ -180,7 +159,11 @@ void WindowProJOS::ChackPassword()
 {
     this->clearScreen();
     WindowMainProjOS mainOS(this);
+#ifdef _WIN32
     cin.ignore();
+#else
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+#endif // _WIN32
     mainOS.ChaOS();
     mainOS.getUserInput();
 }
