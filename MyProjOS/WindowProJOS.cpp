@@ -135,20 +135,8 @@ void WindowProJOS::LoginFuncPassword(string user)
         }
     }
 #else
-    termios oldt, newt;
-    tcgetattr(STDIN_FILENO, &oldt);
-    newt = oldt;
-    newt.c_lflag &= ~(ICANON | ECHO);
-    tcsetattr(STDIN_FILENO, TCSANOW, &newt);
-
-    char ch;
-    while (true) {
-        ch = getchar();
-        if (ch == '\n') break;
-        password.push_back(ch);
-    }
-
-    tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
+    char* passInput = getpass("");
+    password = passInput;
 #endif
 
     cout << endl;
