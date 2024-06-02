@@ -162,7 +162,6 @@ void WindowProJOS::ChackPassword()
 #ifdef _WIN32
     cin.ignore();
 #else
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
 #endif // _WIN32
     mainOS.ChaOS();
     mainOS.getUserInput();
