@@ -3,6 +3,11 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <sstream>
+#include <fstream>
+#include <functional>
+#include <algorithm>
+#include <iomanip>
 
 #ifdef _WIN32
 #include <conio.h>
@@ -30,8 +35,10 @@ private:
 	void LoginLOGO();
 	string LoginFuncUser();
 	void LoginFuncPassword(string);
-	void ChackPassword();
+	bool ChackPassword(string,string);
+	void loginsuccess();
 	void clearScreen();
+	string hashPassword(const string&);
 };
 
 #endif // WINDOWPROJOS_H

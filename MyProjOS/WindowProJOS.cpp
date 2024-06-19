@@ -140,10 +140,41 @@ void WindowProJOS::LoginFuncPassword(string user)
 #endif
 
     cout << endl;
-    this->ChackPassword(); 
+    string userhash = this->hashPassword(user);
+    string passwordhash = this->hashPassword(password);
+    this->ChackPassword(userhash, passwordhash);
+    bool passwordinfile = ChackPassword(userhash, passwordhash);
+    if (passwordinfile == true) {
+        this->loginsuccess();
+    }
+    else {
+        cin.ignore();
+        this->clearScreen();
+        this->Commandinput();
+    }
+
 }
 
-void WindowProJOS::ChackPassword()
+bool WindowProJOS::ChackPassword(string username, string password)
+{
+    ifstream userPasswordFile("password.txt");
+    string userPasswordLine;
+    while (getline(userPasswordFile, userPasswordLine)) {
+        istringstream iss(userPasswordLine);
+        string storedUsername, storedPassword;
+
+        if (iss >> storedUsername >> storedPassword) {
+            if (storedUsername == username && storedPassword == password) {
+                userPasswordFile.close();
+                return true;
+            }
+        }
+    }
+    userPasswordFile.close();
+    return false;
+}
+
+void WindowProJOS::loginsuccess()
 {
     this->clearScreen();
     WindowMainProjOS mainOS(this);
@@ -167,4 +198,11 @@ void WindowProJOS::clearScreen() {
 #else
     system("clear");
 #endif
+}
+
+string WindowProJOS::hashPassword(const string& userpassword)
+{
+    hash<string> hasher;
+    size_t hash = hasher(userpassword);
+    return to_string(hash);
 }
